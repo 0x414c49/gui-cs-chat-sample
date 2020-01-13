@@ -9,7 +9,7 @@ namespace RetroChat
             Application.Init();
             var top = Application.Top;
 
-            var win = new Window("Retro Chat")
+            var mainWindow = new Window("Retro Chat")
             {
                 X = 0,
                 Y = 1, // Leave one row for the toplevel menu
@@ -18,6 +18,10 @@ namespace RetroChat
                 Width = Dim.Fill(),
                 Height = Dim.Fill()
             };
+
+            // login window will be appear on the center screen
+            var loginWindow = new LoginWindow(mainWindow);
+            mainWindow.Add(loginWindow);
 
             Application.Run();
         }
