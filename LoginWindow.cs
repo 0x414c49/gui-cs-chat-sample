@@ -6,8 +6,8 @@ namespace RetroChat
     public class LoginWindow : Window
     {
         private readonly View _parent;
-        public Action<(string name, DateTime birthday)> OnLogin {get;set;}
-        public Action OnExit {get;set;}
+        public Action<(string name, DateTime birthday)> OnLogin { get; set; }
+        public Action OnExit { get; set; }
 
         public LoginWindow(View parent) : base("Login", 5)
         {
@@ -25,7 +25,8 @@ namespace RetroChat
 
         public void Close()
         {
-            _parent.Remove(this);
+            Application.RequestStop();
+            _parent?.Remove(this);
         }
 
         private void InitControls()

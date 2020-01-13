@@ -9,7 +9,7 @@ namespace RetroChat
             Application.Init();
             var top = Application.Top;
 
-            var mainWindow = new Window("Retro Chat")
+            var mainWindow = new Window("Retro chat")
             {
                 X = 0,
                 Y = 1, // Leave one row for the toplevel menu
@@ -19,11 +19,30 @@ namespace RetroChat
                 Height = Dim.Fill()
             };
 
-            // login window will be appear on the center screen
-            var loginWindow = new LoginWindow(mainWindow);
-            mainWindow.Add(loginWindow);
+            var menu = new MenuBar(new MenuBarItem[] {
+                new MenuBarItem("_File", new MenuItem[]{
+                    new MenuItem("_Quit", "", () => Application.RequestStop())
+                }), // end of file menu
+                new MenuBarItem("_Help", new MenuItem[]{
+                    new MenuItem("_About", "", ()
+                                => MessageBox.Query(15, 5, "About", "Written by Ali Bahraminezhad\nVersion: 0.0001", "Ok"))
+                }) // end of the help menu
+            });
 
-            Application.Run();
+            // login window will be appear on the center screen
+            var loginWindow = new LoginWindow(null);
+            loginWindow.OnExit = () => Application.RequestStop();
+
+            loginWindow.OnLogin = (loginData) =>
+            {
+                mainWindow.Add(menu);
+                Application.Run(top);
+            };
+
+            top.Add(mainWindow);
+
+            // run login-window-first
+            Application.Run(loginWindow);
         }
     }
 }
